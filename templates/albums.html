@@ -6,7 +6,7 @@
 	<div class="row albums">
 		<div class="col-md-3 album" ng-repeat="album in albums">
 			<img ng-src={{album.photo}} title={{album.name}} >
-			<span>{{album.name}}</span>
+			<span>{{ album.name + " (" + album.size + ")" }}</span>
 		</div>
 	</div>
 </div>

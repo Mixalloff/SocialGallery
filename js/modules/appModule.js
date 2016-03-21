@@ -43,23 +43,13 @@ angular.module('TestApp', ['ngRoute'])
 			return authStatus;
 		},
 		checkAuth: function() {
-			// VK.Auth.getLoginStatus(function(response){
-			// 	if (response.session){
-			// 		authStatus = true;
-			// 		VK.Api.call('users.get', {
-		 //                user_id: response.session.user.id,
-		 //                fields: 'photo_200',
-		 //                name_case: 'nom'
-		 //            }, function(users){
-		 //                profile = users.response[0];
-		 //                $rootScope.$broadcast('profileStatusChanged');
-		 //            }); 
-			// 	}else{
-			// 		$rootScope.$apply(function() {
-			//             $location.path("/auth");
-			//         });
-			// 	}
-			// });
+			VK.Auth.getLoginStatus(function(response){
+				if (response.session){
+					return true;
+				}else{
+					return false;
+				}
+			});
 		},
 		authorize: function(user, callback) {
 			profile = user;
@@ -78,30 +68,45 @@ angular.module('TestApp', ['ngRoute'])
 	};
 })
 .run(function($rootScope, $location, AuthService){
+	// ID приложения в ВК
 	var appId = 5366823;
     // Инициализация VK API
     VK.init({
         apiId: appId
     });
+    // Проверка авторизации
+    VK.Auth.getLoginStatus(function(response){
+				if (response.session){
+					authStatus = true;
+					VK.Api.call('users.get', {
+		                user_id: response.session.mid,
+		                fields: 'photo_200',
+		                name_case: 'nom'
+		            }, function(users){
+			            AuthService.authorize(users.response[0]);
+			            $rootScope.$broadcast('profileStatusChanged');
+			            $rootScope.$apply(function() {
+				            $location.path("/albums");
+				        });
+			        }); 
+				}else{
+					$rootScope.$apply(function() {
+			            $location.path("/auth");
+			        });
+				}
+			}); 
 
-    VK.Auth.login(function(response){ 
-    	if(response.status == 'connected') {
-    		VK.Api.call('users.get', {
-	            user_id: response.session.user.id,
-	            fields: 'photo_200',
-	            name_case: 'nom'
-	        }, function(users){
-	            AuthService.authorize(users.response[0]);
-	            $rootScope.$broadcast('profileStatusChanged');
-	            $rootScope.$apply(function() {
-		            $location.path("/albums");
-		        });
-	        });   
-    	}else {
-    		$rootScope.$apply(function() {
+    // Срабатывает после авторизации
+    VK.Observer.subscribe('auth.login', function(response){
+		console.log("auth");
+	});
+	// Событие изменения сессии
+	VK.Observer.subscribe('auth.sessionChange', function(response){
+		console.log("session changed");
+		if (!AuthService.checkAuth()){
+			$rootScope.$apply(function() {
 	            $location.path("/auth");
 	        });
-    	}
-           
-    } , VK.access.PHOTOS);    	
+		}
+	});	
 });
