@@ -1,8 +1,9 @@
 var testApp=angular.module('TestApp');
-testApp.controller("photosController", function ($scope, $location, AuthService, $timeout, $routeParams) {
+testApp.controller("photosController", function ($scope, $location, AuthService, AppService, $timeout, $routeParams) {
     
     $scope.album_id = $routeParams["album_id"];
 
+    $scope.pageTitle = AppService.getTitle();
     $scope.profile = AuthService.getProfile();
   	$scope.photos = [];
   	$scope.popupImageSrc = "";
@@ -45,9 +46,7 @@ testApp.controller("photosController", function ($scope, $location, AuthService,
     }
 
     $scope.goToAlbums = function() {
-		$rootScope.$apply(function() {
-            $location.path("/albums");
-        });
+		AppService.redirectTo('/albums');
     }
 
     $scope.openPopupImage = function(item) {

@@ -21,6 +21,8 @@
 	margin: 10px 0;
 	background-color: #2B587A;
 	color: white;
+	font-size: 16pt;
+    padding: 15px 0;
 }
 
 .auth_btn:hover {

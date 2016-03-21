@@ -1,8 +1,9 @@
 <link rel="stylesheet" href="../css/photos.css">
-<div class="container">
-	<div class="row profile">
+<div class="container-fluid">
+	<div class="row header">
 		<img class="col-sm-1" ng-src={{profile.photo_200}} alt="">
 		<span>{{profile.first_name + " " + profile.last_name}}</span>
+		<span class="pageTitle">{{pageTitle}}</div>
 	</div>
 	<div class="photos">
 		<div id={{photo.id}} class="photo" ng-repeat="photo in photos" ng-click="openPopupImage(this)">
@@ -10,7 +11,6 @@
 			<div class="tooltip_container">
 				<span class="likes">{{"&#x2764;" + photo.likes}}</span>
 			</div>
-			<!--<span>{{photo.likes + " likes"}}</span>-->
 		</div>
 	</div>
 </div>

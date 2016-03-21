@@ -1,12 +1,13 @@
 var testApp=angular.module('TestApp');
-testApp.controller("authController", function ($rootScope, $scope, $location, $http, $timeout, AuthService) {
+testApp.controller("authController", function ($rootScope, $scope, $location, $http, $timeout, AppService, AuthService) {
     $scope.AuthService = AuthService;
-//AuthService.checkAuth();
+    if(AuthService.checkAuth()){
+        AppService.redirectTo('/albums');
+    }
+
     // Переход в альбомы при успешной авторизации
     $scope.goToAlbums = function(){
-        $scope.$apply(function() {
-            $location.path("/albums");
-        });
+        AppService.redirectTo("/albums");
     }
     // Авторизация
     $(".auth_btn").click(function(){
@@ -20,16 +21,12 @@ testApp.controller("authController", function ($rootScope, $scope, $location, $h
                         AuthService.authorize(users.response[0]);
                         $rootScope.$broadcast('profileStatusChanged');
                         $timeout(function() {
-                            $rootScope.$apply(function() {
-                                $location.path("/albums");
-                            });
+                            AppService.redirectTo("/albums");
                         });
                     });   
              }else {
                 $timeout(function() {
-                     $rootScope.$apply(function() {
-                            $location.path("/auth");
-                        });
+                     AppService.redirectTo("/auth");
                 });
                 alert("Error auth!");
              }

@@ -1,14 +1,24 @@
-.profile img {
+.header img {
 	border-radius: 100%;
 	height: 100%;
 }
 
-.profile span {
+.header span {
 	font-size: 18pt;
+	color: white;
 }
 
-.profile {
+.header {
 	display:flex;
     align-items:center;
-    margin: 10px 0;
+    margin: 20px 0;
+    background-color: #2B587A;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #928F8F;
+    padding-right: 10px;
+}
+
+.pageTitle {
+	flex: 2;
+    text-align: right;
 }

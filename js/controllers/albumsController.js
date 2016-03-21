@@ -1,6 +1,6 @@
 var testApp=angular.module('TestApp');
 testApp.controller("albumsController",
-    function ($scope, $location, AuthService, $timeout, $routeParams) {
+    function ($scope, $location, AuthService, AppService, $timeout, $routeParams) {
 
     	//var id = $routeParams["id"];
     	//AuthService.checkAuth();
@@ -47,11 +47,10 @@ testApp.controller("albumsController",
             });  
 	    }
 
-	    $scope.openAlbum = function (album_id) {
+	    $scope.openAlbum = function (album) {
+	    	var title = "Альбом > " + album.name;
 	    	$timeout(function() {
-				$scope.$apply(function() {
-	            	$location.path("/album/" + album_id);
-	        	});
+	    		AppService.redirectTo("/album/" + album.id, title);
 			});	
 	    	
 	    // console.log(album_id);

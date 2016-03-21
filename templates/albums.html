@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="../css/albums.css">
-<div class="container">
-	<div class="row profile">
+<div class="container-fluid">
+	<div class="row header">
 		<img class="col-sm-1" ng-src={{profile.photo_200}} alt="">
 		<span>{{profile.first_name + " " + profile.last_name}}</span>
 	</div>
 	<div class="row albums">
-		<div id={{album.id}} ng-click="openAlbum(album.id)" class="col-md-3 album" ng-repeat="album in albums">
+		<div id={{album.id}} ng-click="openAlbum(this.album)" class="col-md-3 album" ng-repeat="album in albums">
 			<img ng-src={{album.photo}} title={{album.name}} >
 			<span>{{ album.name + " (" + album.size + ")" }}</span>
 		</div>

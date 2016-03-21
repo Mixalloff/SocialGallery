@@ -23,9 +23,10 @@
 .photo:hover .tooltip_container{ 
   /*opacity: 0.6; */
   /*filter: alpha(opacity=60);*/ 
-
 	display: block;
 	background-color: rgba(0, 0, 0, .6);
+	display:flex;
+    align-items:center;
 } 
 
 .tooltip_container {
@@ -38,11 +39,7 @@
 }
 
 .likes {
-	position: absolute;
     width: 100%;
-    top: 50%;
-    left: 0;
-    margin-top: -20px;
     color: #A0A0A0;
     font-size: 40px;
 }
@@ -63,4 +60,3 @@
 	margin-top: 5vh;
 	max-height: 90vh;
 }
-

@@ -30,7 +30,24 @@ angular.module('TestApp', ['ngRoute'])
         redirectTo: '/'
     });
 })
-.factory('AuthService', function($rootScope, $location) {
+.factory('AppService', function($rootScope, $location) {
+	var title = "";
+	return {
+		getTitle: function() {
+			return title;
+		},
+		setTitle: function(newTitle) {
+			title = newTitle;
+		},
+		redirectTo: function(route, newTitle) {
+			title = newTitle;
+			$rootScope.$apply(function() {
+	            $location.path(route);
+	        });
+		}
+	}
+})
+.factory('AuthService', function($rootScope) {
 	// Профиль текущего пользователя
 	var profile = {};
 	// Статус авторизации
@@ -67,7 +84,7 @@ angular.module('TestApp', ['ngRoute'])
 		},
 	};
 })
-.run(function($rootScope, $location, AuthService){
+.run(function($rootScope, $location, AuthService, AppService){
 	// ID приложения в ВК
 	var appId = 5366823;
     // Инициализация VK API
@@ -85,14 +102,10 @@ angular.module('TestApp', ['ngRoute'])
 		            }, function(users){
 			            AuthService.authorize(users.response[0]);
 			            $rootScope.$broadcast('profileStatusChanged');
-			            $rootScope.$apply(function() {
-				            $location.path("/albums");
-				        });
+			            AppService.redirectTo('/albums');
 			        }); 
 				}else{
-					$rootScope.$apply(function() {
-			            $location.path("/auth");
-			        });
+					AppService.redirectTo('/auth');
 				}
 			}); 
 
@@ -104,9 +117,7 @@ angular.module('TestApp', ['ngRoute'])
 	VK.Observer.subscribe('auth.sessionChange', function(response){
 		console.log("session changed");
 		if (!AuthService.checkAuth()){
-			$rootScope.$apply(function() {
-	            $location.path("/auth");
-	        });
+			AppService.redirectTo('/auth');
 		}
 	});	
 });
