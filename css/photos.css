@@ -1,0 +1,66 @@
+.photo {
+	text-align: center;
+	cursor: pointer;
+	position: relative;
+}
+
+.photos {
+	-webkit-columns: 5; 
+	   -moz-columns: 5; 
+	        columns: 5; 
+	-webkit-column-gap: 0; 
+	   -moz-column-gap: 0; 
+	        column-gap: 0; 
+}
+
+.photo img {
+	display:block; 
+  	width:100%; 
+  	height:auto;
+  	background-color: #fff; 
+  	border: 1px solid #3E3E3E;
+}
+.photo:hover .tooltip_container{ 
+  /*opacity: 0.6; */
+  /*filter: alpha(opacity=60);*/ 
+
+	display: block;
+	background-color: rgba(0, 0, 0, .6);
+} 
+
+.tooltip_container {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+.likes {
+	position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    margin-top: -20px;
+    color: #A0A0A0;
+    font-size: 40px;
+}
+
+
+.popup_container {
+	position: fixed;
+    z-index: 9999999;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, .6);
+	text-align: center;
+}
+
+.popup_container img {
+	margin-top: 5vh;
+	max-height: 90vh;
+}
+

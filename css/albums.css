@@ -1,0 +1,8 @@
+.album {
+	text-align: center;
+	cursor: pointer;
+}
+
+.album img {
+	width: 100%;
+}

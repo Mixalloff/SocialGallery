@@ -22,7 +22,7 @@ angular.module('TestApp', ['ngRoute'])
         templateUrl: templates + '/albums.html',
         controller: 'albumsController'
     })
-    .when('/photos', { 
+    .when('/album/:album_id', { 
         templateUrl: '/templates/photos.html',
         controller: 'photosController'
     })

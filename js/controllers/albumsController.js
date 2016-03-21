@@ -9,12 +9,12 @@ testApp.controller("albumsController",
 	  	$scope.albums = [];
 
     	$scope.$on('profileStatusChanged', function(){
-	        init();
+	        initializePage();
 	    });
 
-	    init();
+	    initializePage();
 
-	    function init() {
+	    function initializePage() {
 	    	$scope.profile = AuthService.getProfile();
 
 	    	VK.Api.call('photos.getAlbums', {
@@ -26,35 +26,34 @@ testApp.controller("albumsController",
                 if (albums.response){
                 	for (var i = 0; i < albums.response.length; i++){
                 		$scope.albums[i] = {};
-                		$scope.albums[i].id = albums.response[i].aid;
+                		// Установка ID альбома (если системный - спец значение)
+            			switch(albums.response[i].aid){
+            				case -6: { $scope.albums[i].id = "profile"; break; }
+            				case -7: { $scope.albums[i].id = "wall"; break; }
+            				case -15: { $scope.albums[i].id = "saved"; break; }
+            				default: { $scope.albums[i].id = albums.response[i].aid; }
+            			}
+                		
                 		$scope.albums[i].name = albums.response[i].title;
+                		// Количество фото в альбоме
                 		$scope.albums[i].size = albums.response[i].size;
-                		// Получение фото размера 'r'
-                		// $scope.albums[i].photo = albums.response[i].sizes.filter(function(size){
-                		// 	return size.type == 'r';
-                		// })[0].src;
+                		// Получение фото максимального размера
                 		$scope.albums[i].photo = albums.response[i].sizes[albums.response[i].sizes.length - 1].src;
                 	}
-                	//$scope.albums = albums.response;
                 	$timeout(function() {
 						$scope.$digest();
 					});	
                 }
             });  
-            
-            
 	    }
 
-	   	    
-	    
-	    // $scope.albums = [
-	    // 	{ name: "album1", src:"http://vignette4.wikia.nocookie.net/logopedia/images/a/a6/Real-Madrid.png/revision/latest?cb=20120211170829" },
-	    // 	{ name: "album2", src:"http://s25.postimg.org/vbep6kcgf/barcelona.png" },
-	    // 	{ name: "album3", src:"http://sport.img.com.ua/nxs287/b/orig/7/71/7551367847e0a45e7d6a439f0a229717.png" },
-	    // 	{ name: "album3", src:"https://upload.wikimedia.org/wikipedia/it/0/0d/Chelsea_FC.png" },
-	    // 	{ name: "album1", src:"http://vignette4.wikia.nocookie.net/logopedia/images/a/a6/Real-Madrid.png/revision/latest?cb=20120211170829" },
-	    // 	{ name: "album2", src:"http://s25.postimg.org/vbep6kcgf/barcelona.png" },
-	    // 	{ name: "album3", src:"http://sport.img.com.ua/nxs287/b/orig/7/71/7551367847e0a45e7d6a439f0a229717.png" },
-	    // 	{ name: "album3", src:"https://upload.wikimedia.org/wikipedia/it/0/0d/Chelsea_FC.png" },
-	    // ];
+	    $scope.openAlbum = function (album_id) {
+	    	$timeout(function() {
+				$scope.$apply(function() {
+	            	$location.path("/album/" + album_id);
+	        	});
+			});	
+	    	
+	    // console.log(album_id);
+	    }
 });
