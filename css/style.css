@@ -22,3 +22,8 @@
 	flex: 2;
     text-align: right;
 }
+
+.pageTitle a {
+	color: white;
+	text-decoration: underline;
+}

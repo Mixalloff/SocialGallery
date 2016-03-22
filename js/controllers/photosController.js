@@ -1,6 +1,13 @@
 var testApp=angular.module('TestApp');
 testApp.controller("photosController", function ($scope, $location, AuthService, AppService, $timeout, $routeParams) {
     
+    $scope.$on("$routeChangeSuccess", function () {
+        initializePage();
+    });
+    $scope.$on('profileStatusChanged', function(){
+        initializePage();
+    });
+
     $scope.album_id = $routeParams["album_id"];
 
     $scope.pageTitle = AppService.getTitle();
@@ -8,12 +15,6 @@ testApp.controller("photosController", function ($scope, $location, AuthService,
   	$scope.photos = [];
   	$scope.popupImageSrc = "";
     $scope.isPopup = false;
-
-	$scope.$on('profileStatusChanged', function(){
-        initializePage();
-    });
-
-    initializePage();
 
     function initializePage() {
     	if ($scope.album_id !== undefined){

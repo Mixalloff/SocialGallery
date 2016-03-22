@@ -8,10 +8,7 @@ angular.module('TestApp', ['ngRoute'])
         requireBase: false
 	});
 
-	$routeProvider.when('/', { 
-        //templateUrl: '../../index.html',
-        //template: 'Main!!',
-        //controller: 'mainController'
+	$routeProvider.when('/', {
         redirectTo: '/auth'
     })
     .when('/auth', { 
@@ -107,17 +104,5 @@ angular.module('TestApp', ['ngRoute'])
 				}else{
 					AppService.redirectTo('/auth');
 				}
-			}); 
-
-    // Срабатывает после авторизации
-    VK.Observer.subscribe('auth.login', function(response){
-		console.log("auth");
-	});
-	// Событие изменения сессии
-	VK.Observer.subscribe('auth.sessionChange', function(response){
-		console.log("session changed");
-		if (!AuthService.checkAuth()){
-			AppService.redirectTo('/auth');
-		}
-	});	
+			});
 });

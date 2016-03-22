@@ -2,17 +2,15 @@ var testApp=angular.module('TestApp');
 testApp.controller("albumsController",
     function ($scope, $location, AuthService, AppService, $timeout, $routeParams) {
 
-    	//var id = $routeParams["id"];
-    	//AuthService.checkAuth();
+		$scope.$on("$routeChangeSuccess", function () {
+		    initializePage();
+		});
+		$scope.$on('profileStatusChanged', function(){
+	        initializePage();
+	    });
 		
 		$scope.profile = AuthService.getProfile();
 	  	$scope.albums = [];
-
-    	$scope.$on('profileStatusChanged', function(){
-	        initializePage();
-	    });
-
-	    initializePage();
 
 	    function initializePage() {
 	    	$scope.profile = AuthService.getProfile();
@@ -48,11 +46,8 @@ testApp.controller("albumsController",
 	    }
 
 	    $scope.openAlbum = function (album) {
-	    	var title = "Альбом > " + album.name;
 	    	$timeout(function() {
-	    		AppService.redirectTo("/album/" + album.id, title);
+	    		AppService.redirectTo("/album/" + album.id, album.name);
 			});	
-	    	
-	    // console.log(album_id);
 	    }
 });

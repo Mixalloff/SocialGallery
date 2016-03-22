@@ -6,7 +6,12 @@
 	</div>
 	<div class="row albums">
 		<div id={{album.id}} ng-click="openAlbum(this.album)" class="col-md-3 album" ng-repeat="album in albums">
-			<img ng-src={{album.photo}} title={{album.name}} >
+			<div class="album_photo_container">
+				<img ng-src={{album.photo}} title={{album.name}} >
+				<div class="tooltip_container">
+					<span class="album_size">{{"&#128247;" + album.size}}</span>
+				</div>
+			</div>
 			<span>{{ album.name + " (" + album.size + ")" }}</span>
 		</div>
 	</div>

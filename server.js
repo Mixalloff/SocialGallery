@@ -11,7 +11,6 @@ class Server {
     initExpress(){
         app.use(express.static(__dirname + '/'));
         app.use('*', function(req, res){
-            //res.header('Access-Control-Allow-Origin', '*');
             res.sendFile(__dirname + '/index.html');
         });
     }

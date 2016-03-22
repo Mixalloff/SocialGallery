@@ -3,7 +3,10 @@
 	<div class="row header">
 		<img class="col-sm-1" ng-src={{profile.photo_200}} alt="">
 		<span>{{profile.first_name + " " + profile.last_name}}</span>
-		<span class="pageTitle">{{pageTitle}}</div>
+		<span class="pageTitle">
+		<a href="/albums">Альбомы</a>
+		{{" > " + pageTitle}}
+		</div>
 	</div>
 	<div class="photos">
 		<div id={{photo.id}} class="photo" ng-repeat="photo in photos" ng-click="openPopupImage(this)">
