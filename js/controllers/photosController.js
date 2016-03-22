@@ -26,7 +26,6 @@ testApp.controller("photosController", function ($scope, $location, AuthService,
 	            extended: 1,
 	            photo_sizes: 1
 	        }, function(photos){
-	        	console.dir(photos);
 	            if (photos.response){
 	            	for (var i = 0; i < photos.response.length; i++){
 	            		$scope.photos[i] = {};

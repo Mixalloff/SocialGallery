@@ -81,7 +81,7 @@ angular.module('TestApp', ['ngRoute'])
 		},
 	};
 })
-.run(function($rootScope, $location, AuthService, AppService){
+.run(function($rootScope, $location, AuthService, AppService,$route){
 	// ID приложения в ВК
 	var appId = 5366823;
     // Инициализация VK API
@@ -99,7 +99,7 @@ angular.module('TestApp', ['ngRoute'])
 		            }, function(users){
 			            AuthService.authorize(users.response[0]);
 			            $rootScope.$broadcast('profileStatusChanged');
-			            AppService.redirectTo('/albums');
+			            AppService.redirectTo($location.$$path);
 			        }); 
 				}else{
 					AppService.redirectTo('/auth');
